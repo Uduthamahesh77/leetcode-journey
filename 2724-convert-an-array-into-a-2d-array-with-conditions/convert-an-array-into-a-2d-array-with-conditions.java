@@ -11,7 +11,7 @@ class Solution {
             ans.get(freq[c]).add(c);
             freq[c]++;
         }
-
+        System.gc();
         return ans;
     }
 }

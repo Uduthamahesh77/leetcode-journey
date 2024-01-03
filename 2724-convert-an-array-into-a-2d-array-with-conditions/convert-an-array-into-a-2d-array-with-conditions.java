@@ -1,17 +1,26 @@
 class Solution {
     public List<List<Integer>> findMatrix(int[] nums) {
-        int[] freq = new int[nums.length + 1];
-        List<List<Integer>> ans = new ArrayList<>();
-
-        for (int c : nums) {
-            if (freq[c] >= ans.size()) {
-                ans.add(new ArrayList<>());
-            }
-
-            ans.get(freq[c]).add(c);
-            freq[c]++;
+        int n=nums.length;
+        int ct[]=new int[201];
+        for(int i=0;i<n;i++){
+            ct[nums[i]]++;
         }
-        System.gc();
+        int maxrow=0;
+        for(int i=0;i<=200;i++){
+            maxrow=Math.max(maxrow,ct[i]);
+        }
+        List<List<Integer>>ans=new ArrayList<>();
+        for(int i=0;i<maxrow;i++){
+            ArrayList<Integer>in=new ArrayList<>();
+            for(int k=0;k<=200;k++){
+                if(ct[k]>0){
+                    in.add(k);
+                    ct[k]--;
+                }
+            }
+            ans.add(in);
+
+        }
         return ans;
     }
 }

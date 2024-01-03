@@ -15,6 +15,7 @@ class Solution {
                     prevRow=currentRow;
                 }
         }
+        System.gc();
         return result;
     }
 }

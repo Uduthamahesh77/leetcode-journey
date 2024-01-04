@@ -1,8 +1,9 @@
 class Solution {
     public int minOperations(int[] nums) {
+        Arrays.sort(nums);
         int i=0,j=0;
         int ans=0;
-        Arrays.sort(nums);
+        
         while(j<nums.length){
             while(j<nums.length && nums[i]==nums[j]){
                 j++;

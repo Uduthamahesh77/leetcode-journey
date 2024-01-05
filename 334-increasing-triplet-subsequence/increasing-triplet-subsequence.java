@@ -5,11 +5,11 @@ class Solution {
         }
         int smallest=Integer.MAX_VALUE;
         int mid=Integer.MAX_VALUE;
-        for(int i=0;i<nums.length;i++){
-            if(nums[i]<=smallest){
-                smallest=nums[i];
-            }else if(nums[i]<=mid){
-                mid=nums[i];
+        for(int i: nums){
+            if(i<=smallest){
+                smallest=i;
+            }else if(i<=mid){
+                mid=i;
 
             }else return true;
         }

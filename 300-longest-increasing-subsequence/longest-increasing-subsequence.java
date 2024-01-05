@@ -3,9 +3,6 @@ class Solution {
         int temp[]=new int[nums.length];
         int count=Integer.MIN_VALUE;
         for(int i=0;i<nums.length;i++){
-            if(count>nums[i]){
-                temp[i]=1;
-            }else{
             int value=0;
                 for(int j=i-1;j>=0;j--){
                     if(nums[i]>nums[j]){
@@ -16,7 +13,6 @@ class Solution {
             
             temp[i]=value+1;
             }
-        }
         int x=0;
         for(int i=0;i<temp.length;i++){
             x=Math.max(temp[i],x);

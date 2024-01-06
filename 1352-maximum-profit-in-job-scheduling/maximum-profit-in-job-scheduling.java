@@ -1,21 +1,29 @@
 class Solution {
     public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
-        int len = startTime.length;
-        int[][] dp = new int[len][3];
-        for(int i=0; i<len; i++){
-            dp[i] = new int[]{startTime[i], endTime[i], profit[i]};
+        int n = startTime.length;
+        int[][] table = new int[n][3];
+        for (int i = 0; i < n; i++) {
+            table[i][0] = startTime[i];
+            table[i][1] = endTime[i];
+            table[i][2] = profit[i];
         }
-
-        Arrays.sort(dp, (a,b)->a[1]-b[1]);
-        TreeMap<Integer, Integer> map = new TreeMap<>();
-        map.put(0, 0);
-        for(var i:dp){
-            int cur = map.floorEntry(i[0]).getValue() + i[2];
-            if(cur > map.lastEntry().getValue()){
-                map.put(i[1], cur);
+        Arrays.sort(table, (a, b) -> a[1] - b[1]); 
+        int[] dp = new int[n];
+        dp[0] = table[0][2];
+        for (int i = 1; i < n; i++) {
+            int curr = table[i][2];
+            int prev_nonoverlap_profit_job = -1;
+            for (int j = i - 1; j >= 0; j--) {
+                if (table[j][1] <= table[i][0]) {
+                    prev_nonoverlap_profit_job = j;
+                    break;
+                }
             }
+            if (prev_nonoverlap_profit_job != -1) {
+                curr += dp[prev_nonoverlap_profit_job];
+            }
+            dp[i] = Math.max(curr, dp[i - 1]);
         }
-
-        return map.lastEntry().getValue();
+        return dp[n - 1];
     }
 }

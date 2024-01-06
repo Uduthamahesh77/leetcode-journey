@@ -1,29 +1,49 @@
 class Solution {
-    public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
-        int n = startTime.length;
-        int[][] table = new int[n][3];
-        for (int i = 0; i < n; i++) {
-            table[i][0] = startTime[i];
-            table[i][1] = endTime[i];
-            table[i][2] = profit[i];
+
+    class Job {
+        int startTime;
+        int endTime;
+        int profit;
+        Job(){};
+        Job(int _startTime, int _endTime, int _profit){
+            startTime = _startTime;
+            endTime = _endTime;
+            profit = _profit;
         }
-        Arrays.sort(table, (a, b) -> a[1] - b[1]); 
-        int[] dp = new int[n];
-        dp[0] = table[0][2];
-        for (int i = 1; i < n; i++) {
-            int curr = table[i][2];
-            int prev_nonoverlap_profit_job = -1;
-            for (int j = i - 1; j >= 0; j--) {
-                if (table[j][1] <= table[i][0]) {
-                    prev_nonoverlap_profit_job = j;
-                    break;
-                }
-            }
-            if (prev_nonoverlap_profit_job != -1) {
-                curr += dp[prev_nonoverlap_profit_job];
-            }
-            dp[i] = Math.max(curr, dp[i - 1]);
-        }
-        return dp[n - 1];
+
     }
+
+    public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
+
+        int n = startTime.length;
+        Job[] jobs = new Job[n];
+        for(int i =0; i < n; ++i){
+            jobs[i] = new Job(startTime[i], endTime[i], profit[i] );
+        }
+
+        Arrays.sort(jobs, (a,b)-> (a.endTime - b.endTime));
+        int[] dp = new int[n+1];
+        dp[0] = 0;
+        
+        for(int i = 1; i <= n; ++i){
+            int k = binarySearch(jobs, i-1, jobs[i-1].startTime);
+            dp[i] = Math.max(dp[i-1], dp[k] + jobs[i-1].profit);
+        }
+
+        return dp[n];
+
+    }
+    public int binarySearch(Job[] jobs, int right , int target) {
+         int left = 0;
+         while(left < right){
+            int mid = left + ((right - left) >> 1);
+            if(jobs[mid].endTime > target){
+                right = mid;
+            }else{
+                left = mid + 1;
+            }
+         } 
+         return left;
+    }
+
 }

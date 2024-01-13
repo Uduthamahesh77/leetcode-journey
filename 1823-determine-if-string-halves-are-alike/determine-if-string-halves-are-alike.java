@@ -6,13 +6,11 @@ class Solution {
         int length=s.length();
         int mid=length/2;
         int count=0,count1=0;
-        String sb=s.substring(0,mid);
-        String sb1=s.substring(mid,length);
         for(int i=0;i<mid;i++){
-           count+=isVowels(sb.charAt(i));
+           count+=isVowels(s.charAt(i));
         }
-        for(int i=0;i<mid;i++){
-            count1+=isVowels(sb1.charAt(i));
+        for(int i=mid;i<s.length();i++){
+            count1+=isVowels(s.charAt(i));
         }
         
         if(count==count1){

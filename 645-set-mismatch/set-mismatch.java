@@ -1,8 +1,8 @@
 class Solution {
     public int[] findErrorNums(int[] nums) {
         int fre[]=new int[nums.length+1];
-        for(int i=0;i<nums.length;i++){
-            fre[nums[i]]++;
+        for(int i: nums){
+            fre[i]++;
         }
         int duplicate=-1;
         int missing=-1;

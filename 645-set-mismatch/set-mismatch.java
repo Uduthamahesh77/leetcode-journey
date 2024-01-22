@@ -6,7 +6,7 @@ class Solution {
         }
         int duplicate=-1;
         int missing=-1;
-        for(int i=1;i<=nums.length;i++){
+        for(int i=1;i<fre.length;i++){
             if(fre[i]==2){
                 duplicate=i;
             }

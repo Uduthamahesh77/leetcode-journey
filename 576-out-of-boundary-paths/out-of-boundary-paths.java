@@ -1,25 +1,23 @@
 class Solution {
-    Integer[][][] dp;
-    int mod = 1_000_000_000+7;
-    int m, n;
-    public int findPaths(int m, int n, int maxMove, int x, int y) {
-        dp = new Integer[m][n][maxMove+1];
-        this.m=m;
-        this.n=n;
-        return helper(maxMove, x, y);
+    Integer dp[][][];
+    public int solve(int m,int n,int maxmove,int r,int c){
+       
+        int mod=(int)1e9+7;
+        if(r<0 || c<0||r==m||c==n){
+            return 1;
+        }
+        if(dp[r][c][maxmove]!=null){
+            return dp[r][c][maxmove];
+        }
+        if(maxmove==0){
+            return 0;
+        }
+        int x=(solve(m,n,maxmove-1,r-1,c)+solve(m,n,maxmove-1,r+1,c))%mod;
+        int y=(solve(m,n,maxmove-1,r,c-1)+solve(m,n,maxmove-1,r,c+1))%mod;
+        return dp[r][c][maxmove]=(x+y)%mod;
     }
-
-    int helper(int maxMove, int x, int y){
-        if(x<0 || x>=m || y<0 || y>=n)return 1;
-        if(maxMove<=0)return 0;
-        if(dp[x][y][maxMove]!=null)return dp[x][y][maxMove];
-        int res=0;
-        res=(res+helper(maxMove-1, x+1, y))%mod;
-        res=(res+helper(maxMove-1, x, y-1))%mod;
-        res=(res+helper(maxMove-1, x-1, y))%mod;
-        res=(res+helper(maxMove-1, x, y+1))%mod;
-        dp[x][y][maxMove]=res;
-        return res;
-
+    public int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
+        dp=new Integer[m][n][maxMove+1];
+        return solve(m,n,maxMove,startRow,startColumn);
     }
 }

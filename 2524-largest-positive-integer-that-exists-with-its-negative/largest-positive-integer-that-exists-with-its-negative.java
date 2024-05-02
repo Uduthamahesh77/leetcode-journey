@@ -1,14 +1,24 @@
 class Solution {
     public int findMaxK(int[] nums) {
-        int max=Integer.MIN_VALUE;
-        Arrays.sort(nums);
-        for(int i=0;i<nums.length;i++){
-           for(int j=nums.length-1;j>0;j--){
-            if(nums[i]+nums[j]==0){
-                return Math.abs(nums[i]);
-                }
-           }
+        
+        int result = -1;
+        int maxVal = 0;
+        for(int num: nums) {
+            if(num > 0 && num > maxVal && checkNegExists(nums, -1*num)) {
+                maxVal = num;
+                result = maxVal;
+            }
         }
-        return -1;
+        return result;
     }
+
+    public boolean checkNegExists(int[] nums, int k) {
+        for(int num: nums) {
+            if(k == num) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
